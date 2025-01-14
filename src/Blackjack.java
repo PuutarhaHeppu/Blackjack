@@ -32,6 +32,10 @@ public class Blackjack{
         public boolean isAce() {
             return value == "A";
         }
+
+        public String getImagePath()  {
+            return "./cards/" + toString() + ".png";
+        }
     }
 
     ArrayList<Card> deck;
@@ -48,9 +52,60 @@ public class Blackjack{
     int playerSum;
     int playerAceCount;
 
+    //window
+    int boardWidth = 600;
+    int boardHeight = boardWidth;
+
+    int cardWidth = 140;
+    int cardHeight = 196;
+
+    JFrame frame = new JFrame("Black Jack");
+    JPanel gamePanel = new JPanel() {
+        @Override
+        public void paintComponent(Graphics g) {
+            super.paintComponent(g);
+
+            try {
+                //draw hidden card
+                Image hiddenCardimg = new ImageIcon(getClass().getResource("./cards/BACK.png")).getImage();
+                g.drawImage(hiddenCardimg, 20, 20, cardWidth, cardHeight, null);
+
+                //draw dealer's hand
+                for (int i = 0; i < dealerHand.size(); i++) {
+                    Card card = dealerHand.get(i);
+                    Image cardImg = new ImageIcon(getClass().getResource(card.getImagePath())).getImage();
+                    g.drawImage(cardImg, cardWidth + 25 + (cardWidth + 5)*i, 20, cardWidth, cardHeight, null);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            
+        }
+    };
+    JPanel buttoPanel = new JPanel();
+    JButton hitButton = new JButton("Hit");
+    JButton stayButton = new JButton("Stay");
+
+
     Blackjack() {
         startGame();
-        shuffleDeck();
+        
+        frame.setVisible(true);
+        frame.setSize(boardWidth, boardHeight);
+        frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        gamePanel.setLayout(new BorderLayout());
+        gamePanel.setBackground(new Color(53, 101, 77));
+        frame.add(gamePanel);
+
+        hitButton.setFocusable(false);
+        buttoPanel.add(hitButton);
+        stayButton.setFocusable(false);
+        buttoPanel.add(stayButton);
+        frame.add(buttoPanel, BorderLayout.SOUTH);
     }
         
     public void startGame() {
