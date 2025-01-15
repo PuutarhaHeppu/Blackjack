@@ -105,18 +105,23 @@ public class Blackjack{
                     String message = "";
                     if (playerSum > 21) {
                         message = "you Lose!";
+                        newGameButton.setEnabled(true);
                     }
                     else if (dealerSum > 21) {
                         message = "You Win";
+                        newGameButton.setEnabled(true);
                     }
                     else if (playerSum == dealerSum) {
                         message = "Tie!";
+                        newGameButton.setEnabled(true);
                     }
                     else if (playerSum > dealerSum) {
                         message = "You Win!";
+                        newGameButton.setEnabled(true);
                     }
                     else if (playerSum < dealerSum) {
                         message = "You Lose!";
+                        newGameButton.setEnabled(true);
                     }
 
                     g.setFont(new Font("Arial", Font.PLAIN, 30));
@@ -134,10 +139,13 @@ public class Blackjack{
     JPanel buttoPanel = new JPanel();
     JButton hitButton = new JButton("Hit");
     JButton stayButton = new JButton("Stay");
+    JButton newGameButton = new JButton("New Game");
 
 
     Blackjack() {
         startGame();
+
+        newGameButton.setEnabled(false);
         
         frame.setVisible(true);
         frame.setSize(boardWidth, boardHeight);
@@ -153,6 +161,8 @@ public class Blackjack{
         buttoPanel.add(hitButton);
         stayButton.setFocusable(false);
         buttoPanel.add(stayButton);
+        newGameButton.setFocusable(false);
+        buttoPanel.add(newGameButton);
         frame.add(buttoPanel, BorderLayout.SOUTH);
 
         hitButton.addActionListener(new ActionListener() {
@@ -180,6 +190,16 @@ public class Blackjack{
                     dealerAceCount += card.isAce()? 1 : 0;
                     dealerHand.add(card);
                 }
+                gamePanel.repaint();
+            }
+        });
+
+        newGameButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                startGame();
+                hitButton.setEnabled(true);
+                stayButton.setEnabled(true);
+                newGameButton.setEnabled(false);
                 gamePanel.repaint();
             }
         });
