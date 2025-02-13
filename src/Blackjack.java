@@ -50,6 +50,10 @@ public class Blackjack{
     ArrayList<Card> deck;
     Random random = new Random();
 
+    //balance
+    int balance;
+    int betAmount;
+
     //dealer
     Card hiddenCard;
     ArrayList<Card> dealerHand;
@@ -140,9 +144,11 @@ public class Blackjack{
     JButton hitButton = new JButton("Hit");
     JButton stayButton = new JButton("Stay");
     JButton newGameButton = new JButton("New Game");
+    JButton betButton = new JButton("Bet");
 
 
     Blackjack() {
+        placeBet();
         startGame();
 
         newGameButton.setEnabled(false);
@@ -161,6 +167,8 @@ public class Blackjack{
         buttoPanel.add(hitButton);
         stayButton.setFocusable(false);
         buttoPanel.add(stayButton);
+        betButton.setFocusable(false);
+        buttoPanel.add(betButton);
         newGameButton.setFocusable(false);
         buttoPanel.add(newGameButton);
         frame.add(buttoPanel, BorderLayout.SOUTH);
@@ -200,6 +208,13 @@ public class Blackjack{
                 hitButton.setEnabled(true);
                 stayButton.setEnabled(true);
                 newGameButton.setEnabled(false);
+                gamePanel.repaint();
+            }
+        });
+
+        betButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                betButton.setEnabled(false);
                 gamePanel.repaint();
             }
         });
@@ -295,4 +310,8 @@ public class Blackjack{
         }
         return dealerSum;
     }
+
+    /*public int placeBet() {
+        
+    }*/
 }
